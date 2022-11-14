@@ -6,6 +6,16 @@
 
 setwd("C:/Users/rebec/Documents/data science/challenge3-rebeccah2202/script")
 
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+library(gridExtra)
+library(skimr)
+library(brms)
+library(readr)
+library(crunch)
+
 # filtering out Loggerhead Sea turtle populations
 data1 <- filter(data, Species == "caretta")
 
@@ -33,11 +43,13 @@ long3 <- long2 %>% group_by(genus_species_id) %>%
 long4 <- long3 %>% 
   group_by(id) %>%
   mutate(no_observations = length(id)) %>%  # column with number of years with data for each population
-  filter(no_observations>15)                # only keep populations with more than 15 years of data
+  filter(no_observations>15) %>%  # only keep populations with more than 15 years of data
+  filter(!Units == "Total number of female turtles")
+
 
 # exploring number of populations and countries after removing populations with less than 15 years of data
 length(unique(long4$id))             
 length(unique(long4$Country.list))
 length(unique(long4$Units))
 unique(long4$Country.list)
-unique(long4$Sampling.method)
+unique(long4$Units)

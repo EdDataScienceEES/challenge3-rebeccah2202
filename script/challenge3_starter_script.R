@@ -73,3 +73,14 @@ pp_check(model1)
 
 # Model and data visualisation ----
 
+# not sure how informative this plot is
+# also why is there an increase in pop????????
+(f1 <- ggplot(long4, aes(x=year, y=pop)) +
+   geom_point() + 
+   geom_smooth(method="lm", se = FALSE) +
+   theme_bw() +                                                   # adding black white theme to remove background
+   theme(panel.grid = element_blank(),                            # remove grid lines
+         plot.margin = unit(c(1,1,1,1), units = , "cm")) +        # changing margins
+   labs(title="Turtle trends \n between 1971 and 1991") +         # adding plot title
+   theme(plot.title=element_text(size=15, hjust=0.5))) 
+

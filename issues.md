@@ -39,12 +39,13 @@ https://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded
 
 3: Examine the pairs() plot to diagnose sampling problems
 
-**Model 3** *By increasing adapt_delta, I have managed to remove issue of divergent transition*
-*side note: this model is taking a horrifically long time to run*
-Warning messages:
+**Model 3**  
+*By increasing adapt_delta, I have managed to remove issue of divergent transition*  
+*side note: this model is taking a horrifically long time to run*  
+Warning messages:  
 1: There were 1482 transitions after warmup that exceeded the maximum treedepth. Increase max_treedepth above 13. See
 https://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded 
 - I don't understand why I have even more transitions that exceeded maximum treedepth even though I already increased max_treedepth
-- I might increase it to 15 BUT I am worried that it wil take a really really long time to run the model
+- I might increase it to 15 BUT I am worried that it wil take a really really long time to run the model  
 
 2: Examine the pairs() plot to diagnose sampling problems

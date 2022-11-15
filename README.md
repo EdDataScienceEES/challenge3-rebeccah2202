@@ -3,5 +3,8 @@
 
 
 [Preregistration](/preregistration/preregistration_sea_turtle.md)
-
+[Workflow](/process/workflow.pdf)
+[Scripts](/script/challenge3_starter_script.R)
+[Figures](/script/figures)
 [Model convergence](/process/issues.md)
+

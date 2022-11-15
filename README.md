@@ -3,4 +3,4 @@
 
 The process of changing my model to converge is documented here: [https://github.com/EdDataScienceEES/challenge3-rebeccah2202/blob/master/model%20process/issues.md](issues.md)
 
-[Process of changing model to converge](../model process/issues.md)
+[Process of changing model to converge](reminder.md)

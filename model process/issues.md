@@ -49,3 +49,7 @@ https://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded
 - I might increase it to 15 BUT I am worried that it wil take a really really long time to run the model  
 
 2: Examine the pairs() plot to diagnose sampling problems
+
+**Model 4**  
+The model converged and there were no more warning messages yayyy.  
+BUT model took absolutely ages to run, I went and had lunch whilst it was doing its thing. Will check with tutors at coding club that this is okay.

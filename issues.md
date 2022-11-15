@@ -35,5 +35,6 @@ to find out why this is a problem and how to eliminate them.
 2: There were 7513 transitions after warmup that exceeded the maximum treedepth. Increase max_treedepth above 10. See
 https://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded  
 - not sure what to do about this as I read itis not recommended to increase max_treedepth
+- I will try increasing to 13
 
 3: Examine the pairs() plot to diagnose sampling problems

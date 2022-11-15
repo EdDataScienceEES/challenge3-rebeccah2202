@@ -62,6 +62,7 @@ long4 <- long3 %>%
 # Statistical analysis ----
 
 # Hierarchical linear model using brms----
+# Model 1
 long4$pop <- as.integer(long4$pop)
 model1 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
                     data = long4, family = poisson(), chains = 3,
@@ -70,6 +71,31 @@ model1 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.populat
 summary(model1)
 plot(model1)
 pp_check(model1)
+pairs(model1)
+
+# Model 2
+# I am increasing iterations to resolve issue of Bulk Effective Samples Size (ESS) being too low
+model2 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
+                    data = long4, family = poisson(), chains = 3,
+                    iter = 4000, warmup = 1000)
+
+summary(model2)
+
+# Model 3
+# I have increased the maximum tree depth to 13 and adapt delta to 0.99 to try and resolve
+# (1) high number of divergent transitions
+# (2) high number of transitions that exceed maximum treedepth
+
+model3 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
+                    data = long4, family = poisson(), chains = 3,
+                    iter = 4000, warmup = 1000,
+                    control = list(max_treedepth = 13, adapt_delta = 0.99))
+
+summary(model3)
+plot(model3)
+pp_check(model3)
+pairs(model3)
+
 
 # Model and data visualisation ----
 
@@ -84,3 +110,48 @@ pp_check(model1)
    labs(title="Turtle trends \n between 1971 and 1991") +         # adding plot title
    theme(plot.title=element_text(size=15, hjust=0.5))) 
 
+# Trying out a different plot used in bayesian tutorial
+library(tidybayes)
+(f2 <- long4 %>%
+    add_predicted_draws(model3) %>%  # adding the posterior distribution
+    ggplot(aes(x = year, y = pop)) +  
+    stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50),  # regression line and CI
+                    alpha = 0.5, colour = "black") +
+    geom_point(data = long4, colour = "darkseagreen4", size = 3) +   # raw data
+    scale_fill_brewer(palette = "Greys") +
+    ylab("Loggerhead Sea Turtle abundance\n") +  # latin name for red knot
+    xlab("\nYear") +
+    theme_bw() +
+    theme(legend.title = element_blank(),
+          legend.position = c(0.15, 0.85)))
+# that looks horrible lol
+
+# plot for each country
+# Plot the population change for countries individually
+(turtle_scatter_facets <- ggplot(long4, aes (x = year, y = pop, colour = Country.list)) +
+    geom_point(size = 2) +                                               # Changing point size
+    geom_smooth(method = "lm", se = FALSE) +               # Adding linear model fit, colour-code by country
+    facet_wrap(~ Country.list, scales = "free_y", "free_x") +                      # THIS LINE CREATES THE FACETTING
+    theme_bw() +
+    scale_fill_manual(values = c("#66CDAA", "#7AC5CD", "#EEE685", "#EE6A50", "#EE6AA7"),
+                      labels = c("Australia", "Brazil", "Greece", "South Africa", "United States")) +
+    ylab("Number of Loggerhead Sea Turtle nests\n") +                             
+    xlab("\nYear")  +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),     # making the years at a bit of an angle
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 14, face = "plain"),                        
+          panel.grid = element_blank(),                                   # Removing the background grid lines               
+          plot.margin = unit(c(1,1,1,1), units = , "cm"),                 # Adding a 1cm margin around the plot
+          legend.text = element_text(size = 12, face = "italic"),         # Setting the font for the legend text
+          legend.title = element_blank(),                                 # Removing the legend title
+          legend.position = "none")) 
+
+
+ggsave(filename = 'pop_country.png', turtle_scatter_facets, 
+       device = 'png', width = 10, height = 8)
+
+# table ----
+library(sjPlot)
+library(insight)
+library(httr)
+tab_model(model3)

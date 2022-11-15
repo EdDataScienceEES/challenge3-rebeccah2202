@@ -58,11 +58,22 @@ long4 <- long3 %>%
   filter(no_observations>15) %>%  # only keep populations with more than 15 years of data
   filter(!Units == "Total number of female turtles")
 
+# type of data distribution: plot histogram ----
+(hist_turtle <- ggplot(long4, aes(x = pop)) +
+   geom_histogram(colour = c("#458B74"), fill = "#66CDAA") +
+   theme_bw() +
+   ylab("Count\n") +
+   xlab("\nLoggerhead Sea Turtle abundance") +  # latin name for red knot
+   theme(axis.text = element_text(size = 12),
+         axis.title = element_text(size = 14, face = "plain")))    
+# the histogram clearly confirms poisson distribution
+# we have integer values and lef-skewed data
+
 
 # Statistical analysis ----
+# Hierarchical linear models using brms
 
-# Hierarchical linear model using brms----
-# Model 1
+# Model 1 ----
 long4$pop <- as.integer(long4$pop)
 model1 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
                     data = long4, family = poisson(), chains = 3,
@@ -73,7 +84,7 @@ plot(model1)
 pp_check(model1)
 pairs(model1)
 
-# Model 2
+# Model 2 ----
 # I am increasing iterations to resolve issue of Bulk Effective Samples Size (ESS) being too low
 model2 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
                     data = long4, family = poisson(), chains = 3,
@@ -81,7 +92,7 @@ model2 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.populat
 
 summary(model2)
 
-# Model 3
+# Model 3 ----
 # I have increased the maximum tree depth to 13 and adapt delta to 0.99 to try and resolve
 # (1) high number of divergent transitions
 # (2) high number of transitions that exceed maximum treedepth
@@ -95,6 +106,17 @@ summary(model3)
 plot(model3)
 pp_check(model3)
 pairs(model3)
+
+# Model 4 ----
+# increasing maximum tree depth to 15 to resolve high number of transitions that exceed max treedepth
+model4 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
+                    data = long4, family = poisson(), chains = 3,
+                    iter = 4000, warmup = 1000,
+                    control = list(max_treedepth = 15, adapt_delta = 0.99))
+summary(model4)
+plot(model4)
+pp_check(model4)
+pairs(model4)
 
 
 # Model and data visualisation ----
@@ -151,7 +173,20 @@ ggsave(filename = 'pop_country.png', turtle_scatter_facets,
        device = 'png', width = 10, height = 8)
 
 # table ----
+# doesn't include what I want it to include :/
 library(sjPlot)
 library(insight)
 library(httr)
-tab_model(model3)
+tab_model(model4)
+
+tab_model(model4, show.est = TRUE)
+
+# not vibing
+launch_shinystan(model4)
+
+devtools::install_github('m-clark/lazerhawk')
+library(lazerhawk)
+brms_SummaryTable(model4)
+# lol I thought this would give me a proper table 
+
+

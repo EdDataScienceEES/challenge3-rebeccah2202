@@ -195,7 +195,7 @@ pp_check(model5)
     theme_bw() +
     theme(legend.title = element_blank(), legend.position = "none"))
 
-ggsave(filename = 'figures/countries_mod4.png', f2, 
+ggsave(filename = 'figures/countries_mod.png', f2, 
        device = 'png', width = 10, height = 8)
 
 

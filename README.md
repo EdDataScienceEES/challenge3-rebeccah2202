@@ -9,6 +9,7 @@ Contact: s2091339@ed.ac.uk
 [Preregistration](/preregistration/preregistration_sea_turtle.md)    
 [Workflow](/process/workflow.pdf)   
 [Model convergence process](/process/issues.md)   
+[Understanding model output](/process/model_output.md)   
 [Final script](/script/final_script_RH.R)       
 [Figures](/script/figures)   
 

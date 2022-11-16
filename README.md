@@ -5,7 +5,7 @@ Finalized on:
 Contact: s2091339@ed.ac.uk    
 
 ### Overview   
-**[Report](/results/final_results.md)**    
+**[Finarl Report](/results/final_results.md)**    
 [Preregistration](/preregistration/preregistration_sea_turtle.md)    
 [Workflow](/process/workflow.pdf)   
 [Model convergence process](/process/issues.md)   

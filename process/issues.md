@@ -54,5 +54,7 @@ https://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded
 The model converged and there were no more warning messages.  
 BUT model took absolutely ages to run, I went and had lunch whilst it was doing its thing. Will check with tutors at coding club that this is okay.
 
-**Model 5**
-Removed country as a fixed effect from model as this results in model taking such a long time. This model shows the population trends world wide.
+**Model 5**   
+After visualising the results of model 4, which assumed the same population trends for each country (same slope), it became clear that the model is not suitable. This becomes clear when looking at Australia which should have a population decline.
+To account for different models, a small change was made to model 4. An interaction between country and year was integrated into the model. There are some issues with model convergence, I am working on it.
+

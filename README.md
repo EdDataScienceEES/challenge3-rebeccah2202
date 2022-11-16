@@ -1,7 +1,7 @@
 ## Population trends of the Loggerhead Sea Turtle *(Caretta caretta)*
 
 ### Overview   
-**[Report](/report/final_results.md)**    
+**[Report](/results/final_results.md)**    
 [Preregistration](/preregistration/preregistration_sea_turtle.md)    
 [Workflow](/process/workflow.pdf)   
 [Model convergence process](/process/issues.md)   

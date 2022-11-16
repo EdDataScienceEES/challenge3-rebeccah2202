@@ -51,5 +51,8 @@ https://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded
 2: Examine the pairs() plot to diagnose sampling problems
 
 **Model 4**  
-The model converged and there were no more warning messages yayyy.  
+The model converged and there were no more warning messages.  
 BUT model took absolutely ages to run, I went and had lunch whilst it was doing its thing. Will check with tutors at coding club that this is okay.
+
+**Model 5**
+Removed country as a fixed effect from model as this results in model taking such a long time. This model shows the population trends world wide.

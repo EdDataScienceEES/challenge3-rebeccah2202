@@ -58,12 +58,14 @@ long4 <- long3 %>%
   filter(no_observations>15) %>%  # only keep populations with more than 15 years of data
   filter(!Units == "Total number of female turtles")
 
+length(unique(long4$year))
+
 # Data distribution: plot histogram ----
 (hist_turtle <- ggplot(long4, aes(x = pop)) +
    geom_histogram(colour = c("#458B74"), fill = "#66CDAA") +
    theme_bw() +
    ylab("Count\n") +
-   xlab("\nLoggerhead Sea Turtle abundance") +  # latin name for red knot
+   xlab("\nLoggerhead Sea Turtle nests") +
    theme(axis.text = element_text(size = 12),
          axis.title = element_text(size = 14, face = "plain")))    
 # the histogram clearly confirms poisson distribution
@@ -109,7 +111,9 @@ pairs(model3)
 
 # Model 4 ----
 # increasing maximum tree depth to 15 to resolve high number of transitions that exceed max treedepth
-model4 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
+# i realised my data starts from 1973
+# very stupid mistake
+model4 <- brms::brm(pop ~ I(year - 1973) + Country.list + (1|Location.of.population),
                     data = long4, family = poisson(), chains = 3,
                     iter = 4000, warmup = 1000,
                     control = list(max_treedepth = 15, adapt_delta = 0.99))
@@ -118,11 +122,26 @@ output <- summary(model4)
 plot(model4)
 pp_check(model4)
 
+# actual value of increase by adding mean to intercept estimate
+0.02 + 4.72
+# exponentiate value to undo log-transformation 
+exp(4.74)
+# on average there were 114.43 new sea turtle nests every year (worldwide or in Australia??) between 1973 and 2009
 
-# Model and data visualisation ----
+# Model 5 ----
+# removing Country.list because it takes so long 
+model5 <- brms::brm(pop ~ I(year - 1973) + (1|Location.of.population),
+                    data = long4, family = poisson(), chains = 3,
+                    iter = 4000, warmup = 1000,
+                    control = list(max_treedepth = 13, adapt_delta = 0.9))
+summary(model5)
+# actual value of increase by adding mean to intercept estimate
+0.02 + 5.30
+# exponentiate value to undo log-transformation 
+exp(5.32)
+# on average there were 204.38 new sea turtle nests every year worldwide between 1973 and 2009
 
-# not sure how informative this plot is
-# also why is there an increase in pop????????
+# Basic ggplots ----
 (f1 <- ggplot(long4, aes(x=year, y=pop)) +
    geom_point() + 
    geom_smooth(method = lm, se = FALSE) +
@@ -131,55 +150,6 @@ pp_check(model4)
          plot.margin = unit(c(1,1,1,1), units = , "cm")) +        # changing margins
    labs(title="Turtle trends \n between 1971 and 1991") +         # adding plot title
    theme(plot.title=element_text(size=15, hjust=0.5))) 
-
-# Trying out a different plot used in bayesian tutorial
-library(tidybayes)
-(f2 <- long4 %>%
-    add_predicted_draws(model4) %>%  # adding the posterior distribution
-    ggplot(aes(x = year, y = pop)) +  
-    stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50),  # regression line and CI
-                    alpha = 0.5, colour = "black") +
-    geom_point(data = long4, colour = "darkseagreen4", size = 3) +   # raw data
-    scale_fill_brewer(palette = "Greys") +
-    ylab("Loggerhead Sea Turtle abundance\n") +  
-    xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank(),
-          legend.position = c(0.15, 0.85)))
-# that looks horrible lol
-
-(f3 <- long4 %>%
-    group_by(Country.list) %>%
-    add_predicted_draws(model4) %>%
-    ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +
-    stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50), alpha = 1/4) +
-    geom_point(data = long4) +
-    facet_wrap(~ Country.list, scales = "free_y") +
-    scale_fill_brewer(palette = "Set2") +
-    scale_color_brewer(palette = "Dark2") +
-    theme_bw() +
-    ylab("Loggerhead Sea Turtle abundance\n") +
-    xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank(), legend.position = "none"))
-
-# trying different things
-(f4 <- long4 %>%
-    group_by(Country.list) %>%
-    add_predicted_draws(model4) %>%
-    ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +
-    stat_lineribbon(width = c(.95, .80, .50), alpha = 1/4) +
-    geom_point(data = long4) +
-    facet_wrap(~ Country.list, scales = "free_y") +
-    scale_fill_brewer(palette = "Set2") +
-    scale_color_brewer(palette = "Dark2") +
-    theme_bw() +
-    ylab("Loggerhead Sea Turtle abundance\n") +
-    xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank(), legend.position = "none"))
-
-
 
 # plot for each country
 # Plot the population change for countries individually
@@ -226,6 +196,95 @@ ggsave(filename = 'figures/pop_country.png', turtle_scatter_facets,
 
 ggsave(filename = 'figures/pop_country.png', turtle_scatter_facets, 
        device = 'png', width = 10, height = 8)
+
+# Plot used in bayesian tutorial ----
+library(tidybayes)
+(f2 <- long4 %>%
+    add_predicted_draws(model4) %>%  # adding the posterior distribution
+    ggplot(aes(x = year, y = pop)) +  
+    stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50),  # regression line and CI
+                    alpha = 0.5, colour = "black") +
+    geom_point(data = long4, colour = "darkseagreen4", size = 3) +   # raw data
+    scale_fill_brewer(palette = "Greys") +
+    ylab("Loggerhead Sea Turtle abundance\n") +  
+    xlab("\nYear") +
+    theme_bw() +
+    theme(legend.title = element_blank(),
+          legend.position = c(0.15, 0.85)))
+# that looks horrible lol
+
+(f3 <- long4 %>%
+    group_by(Country.list) %>%
+    add_predicted_draws(model4) %>%
+    ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +
+    stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50), alpha = 1/4) +
+    geom_point(data = long4) +
+    facet_wrap(~ Country.list, scales = "free_y") +
+    scale_fill_brewer(palette = "Set2") +
+    scale_color_brewer(palette = "Dark2") +
+    theme_bw() +
+    ylab("Loggerhead Sea Turtle abundance\n") +
+    xlab("\nYear") +
+    theme_bw() +
+    theme(legend.title = element_blank(), legend.position = "none"))
+
+(location_fit <- long4 %>%
+    group_by(Country.list) %>%
+    add_predicted_draws(model4) %>%
+    ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +
+    stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50), alpha = 1/4) +
+    geom_point(data = long4) +
+    scale_fill_brewer(palette = "Set2") +
+    scale_color_brewer(palette = "Dark2") +
+    theme_bw() +
+    ylab("Loggerhead Sea Turtle nests\n") +
+    xlab("\nYear") +
+    theme_bw() +
+    theme(legend.title = element_blank()))
+
+# trying different things
+(f4 <- long4 %>%
+    group_by(Country.list) %>%
+    add_predicted_draws(model4) %>%
+    ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +
+    stat_lineribbon(width = c(.95, .80, .50), alpha = 1/4) +
+    geom_point(data = long4) +
+    facet_wrap(~ Country.list, scales = "free_y") +
+    scale_fill_brewer(palette = "Set2") +
+    scale_color_brewer(palette = "Dark2") +
+    theme_bw() +
+    ylab("Loggerhead Sea Turtle abundance\n") +
+    xlab("\nYear") +
+    theme_bw() +
+    theme(legend.title = element_blank(), legend.position = "none"))
+
+# model 5 plot
+(f7 <- long4 %>%
+    add_predicted_draws(model5) %>%  # adding the posterior distribution
+    ggplot(aes(x = year, y = pop)) +  
+    stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50),  # regression line and CI
+                    alpha = 0.5, colour = "black") +
+    geom_point(data = long4, colour = "darkseagreen4", size = 3) +   # raw data
+    scale_fill_brewer(palette = "Greys") +
+    ylab("Loggerhead Sea Turtle abundance\n") +  
+    xlab("\nYear") +
+    theme_bw() +
+    theme(legend.title = element_blank(),
+          legend.position = c(0.15, 0.85)))
+
+# I hope the many different visualisations don't become to confusing
+library(modelr)
+
+long4 %>%
+  group_by(Country.list) %>%
+  data_grid(year = seq_range(year, n = 37)) %>%
+  add_predicted_draws(model4) %>%
+  ggplot(aes(x = year, y = pop, color = ordered(Country.list))) +
+  stat_lineribbon(aes(y = .prediction)) +
+  geom_point(data = long4) +
+  scale_fill_brewer(palette = "Greys") +
+  scale_color_brewer(palette = "Set2")
+
 
 # Table ----
 # doesn't include what I want it to include :/

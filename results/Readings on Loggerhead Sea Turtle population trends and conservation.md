@@ -1,9 +1,3 @@
----
-title: Readings on Loggerhead Sea Turtle population trends and conservation
-created: '2022-11-15T12:20:52.986Z'
-modified: '2022-11-15T19:52:55.043Z'
----
-
 # Readings on Loggerhead Sea Turtle population trends and conservation
 
 **Turtle populations Brazil**

@@ -1,5 +1,9 @@
 ## Population trends of the Loggerhead Sea Turtle *(Caretta caretta)*
 
+Evaluation of Loggerhead Sea Turtle population trends by Rebecca Hies.    
+Finalized on:    
+Contact: s2091339@ed.ac.uk    
+
 ### Overview   
 **[Report](/results/final_results.md)**    
 [Preregistration](/preregistration/preregistration_sea_turtle.md)    

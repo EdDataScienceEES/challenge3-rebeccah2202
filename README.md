@@ -13,7 +13,8 @@ Contact: s2091339@ed.ac.uk
 [Figures](/script/figures)   
 
 
+**Image of a loggerhead sea turtle in North Cyprus:**   
+![image](https://user-images.githubusercontent.com/114161047/202181743-f694b5b0-86ff-485b-8715-4675dcf32edc.png)
 
-![image](https://user-images.githubusercontent.com/114161047/201360587-69d5a5db-aa58-4632-8ef5-01a9b8b2891d.png)
 
 

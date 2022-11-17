@@ -10,14 +10,10 @@ setwd("C:/Users/rebec/Documents/data science/challenge3-rebeccah2202/script")
 
 # Libraries
 library(tidyverse)
-library(tidyr)
-library(dplyr)
-library(ggplot2)
 library(ggthemes)
 library(gridExtra)
 library(skimr)
 library(brms)
-library(readr)
 library(crunch)
 library(tidybayes)
 

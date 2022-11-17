@@ -5,9 +5,7 @@
 # 16/11/2022
 # Contact: s2091339@ed.ac.uk
 
-# Data wrangling ----
-
-# Libraries
+# Libraries ----
 library(tidyverse)
 library(ggthemes)
 library(gridExtra)
@@ -15,18 +13,15 @@ library(skimr)
 library(brms)
 library(crunch)
 library(tidybayes)
-library(sjPlot)
+# the following three packages are necessary to make the table
+library(sjPlot)   
 library(insight)
 library(httr)
 
-# Load Living Planet Data
+# Load Living Planet Data ----
 load("data/LPI_data.Rdata")
 
-# Choose your species from this list - don't forget to register your species
-# on the issue for the challenge and check that no other student has chosen 
-# the species already. Every student must choose a different species!
-unique(data$Common.Name)
-
+# Data wrangling ----
 # Filter your species here
 data1 <- filter(data, Species == "caretta")
 
@@ -39,6 +34,7 @@ length(unique(data1$Country.list))
 long <- gather(data1, "year", "pop", 25:69) %>%                         # Reshape data into long form
   mutate(year = parse_number(as.character(year))) %>%                   # Extract numeric values from year column
   mutate(genus_species = paste(Genus, Species, sep=" ")) %>%            # Add column with genus and species
+  mutate(genus_species_id = paste (Genus, Species, id, sep=" ")) %>%    # Add column with genus, species and id
   select(-Sub.species)                                                  # Remove subspecies column
 
 long1 <- long %>% na.omit(long)  # Remove NA values
@@ -54,7 +50,7 @@ long2 <- long1 %>% group_by(genus_species_id) %>%
 length(unique(long2$year))
 
 # Data distribution: plot histogram ----
-(hist_turtle <- ggplot(long4, aes(x = pop)) +
+(hist_turtle <- ggplot(long2, aes(x = pop)) +
    geom_histogram(colour = c("#458B74"), fill = "#66CDAA") +
    theme_bw() +
    ylab("Count\n") +
@@ -67,28 +63,33 @@ length(unique(long2$year))
 
 # Statistical analysis ----
 # Hierarchical linear models using brms
-long4$pop <- as.integer(long4$pop)
+long2$pop <- as.integer(long2$pop)
 
 # Final Model
 # Data visualisation showed that the general population trend does not fit to individual countries
 # Therefore interaction term introduced into model to account for this
 # different slopes for population trends in each country
 
-model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),   # interaction between country and year
-                    data = long4, family = poisson(), chains = 3,                      # poisson distribution
-                    iter = 4000, warmup = 1000,
-                    control = list(max_treedepth = 15, adapt_delta = 0.9))             # increased maximum treedepth and alpha delta
+# model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),   # interaction between country and year
+#                    data = long2, family = poisson(), chains = 3,                      # poisson distribution
+#                    iter = 4000, warmup = 1000,
+#                    control = list(max_treedepth = 15, adapt_delta = 0.9))             # increased maximum treedepth and alpha delta
+
+# save(model, file = "model.RData")
+load("~/data science/challenge3-rebeccah2202/script/model.RData")
 summary(model)
 plot(model)
 pp_check(model)
 
+
+
 # Figure separate locations: This figure incorporates facet_wrap function to plot countries in separate plots including model predictions
-(location_seperate <- long4 %>%
+(location_seperate <- long2 %>%
     group_by(Country.list) %>%
     add_predicted_draws(model) %>%  # this line adds the posterior distribution
     ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +  # adding colours for different countries
     stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50), alpha = 1/4) +  # adding regression line and CI
-    geom_point(data = long4) +  # adds raw data
+    geom_point(data = long2) +  # adds raw data
     facet_wrap(~ Country.list, scales = "free_y") +
     theme_bw() +
     ylab("Number of Loggerhead Sea Turtle nests\n") +
@@ -113,3 +114,5 @@ ggsave(filename = 'figures/countries_mod.png', location_seperate,
 # Model Output Table ----
 tab_model(model)  #  back-transformed
 tab_model(model, transform = NULL)  # log scale
+
+table_mod <- tab_model(model, transform = NULL) 

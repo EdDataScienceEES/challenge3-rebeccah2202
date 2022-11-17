@@ -79,10 +79,10 @@ long4$pop <- as.integer(long4$pop)
 # Therefore interaction term introduced into model to account for this
 # different slopes for population trends in each country
 
-model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),
-                    data = long4, family = poisson(), chains = 3,
+model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),   # interaction between country and year
+                    data = long4, family = poisson(), chains = 3,                      # poisson distribution
                     iter = 4000, warmup = 1000,
-                    control = list(max_treedepth = 15, adapt_delta = 0.9))
+                    control = list(max_treedepth = 15, adapt_delta = 0.9))             # increased maximum treedepth and alpha delta
 summary(model)
 plot(model)
 pp_check(model)
@@ -104,12 +104,21 @@ pp_check(model)
           legend.position = "none",
           axis.text.x = element_text(size = 12, angle = 45,  vjust = 1, hjust = 1),
           axis.text.y = element_text(size = 12),
-          axis.title = element_text(size = 13, face = "plain"),                        
+          axis.title = element_text(size = 13),                        
           panel.grid = element_blank(), 
           panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           plot.margin = unit(c(1,1,1,1), units = , "cm"),                 
-          legend.text = element_text(size = 12),
-          panel.spacing = unit(2, "lines")))
+          panel.spacing = unit(2, "lines"),
+          plot.title = element_text( face = "bold")) +
+    labs(title="\nLoggerhead Sea Turtle trends between 1973 and 2009 across the world"))
 
-ggsave(filename = 'figures/countries_mod5.png', location_seperate, 
+ggsave(filename = 'figures/countries_mod.png', location_seperate, 
        device = 'png', width = 10, height = 8)
+
+# Model Output Table ----
+library(sjPlot)
+library(insight)
+library(httr)
+
+tab_model(model)  #  back-transformed
+tab_model(model, transform = NULL)  # log scale

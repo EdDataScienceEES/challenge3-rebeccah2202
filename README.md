@@ -11,7 +11,7 @@ Contact: s2091339@ed.ac.uk
 [Model convergence process](/process/issues.md)   
 [Understanding model output](/process/model_output.md)   
 [Final script](/script/final_script_RH.R)       
-[Figures](/script/figures)   
+[Final figure](/script/figures/countries_mod.png)   
 
 
 **Image of a loggerhead sea turtle in North Cyprus:**   

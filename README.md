@@ -12,7 +12,7 @@ Contact: s2091339@ed.ac.uk
 [Understanding model output](/process/model_output.md)   
 [Workflow script](/script/challenge3_starter_script.R)    
 [Final script](/script/final_script_RH.R)       
-[Final figure](/script/figures/countries_mod.png)   
+[Final figure](/figures/countries_mod.png)   
 
 
 **Image of a loggerhead sea turtle in North Cyprus:**   

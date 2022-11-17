@@ -5,11 +5,7 @@
 # 16/11/2022
 # Contact: s2091339@ed.ac.uk
 
-
-
 # Data wrangling ----
-
-setwd("C:/Users/rebec/Documents/data science/challenge3-rebeccah2202/script")
 
 # Libraries
 library(tidyverse)
@@ -110,7 +106,7 @@ pp_check(model)
           plot.margin = unit(c(1,1,1,1), units = , "cm"),                 
           panel.spacing = unit(2, "lines"),
           plot.title = element_text( face = "bold")) +
-    labs(title="\nLoggerhead Sea Turtle trends between 1973 and 2009 across the world"))
+    labs(title="Loggerhead Sea Turtle trends between 1973 and 2009 across the world\n"))
 
 ggsave(filename = 'figures/countries_mod.png', location_seperate, 
        device = 'png', width = 10, height = 8)

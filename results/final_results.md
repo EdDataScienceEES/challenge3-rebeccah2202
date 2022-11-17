@@ -15,7 +15,15 @@ The data for the Loggerhead Sea Turtle included data from many different populat
 
 As we want to see how Loggerhead Sea Turtle population trends change over time in different countries, we are including countries and time as fixed effects with an interaction term, and nest counts as the response variable. Nests counts are used as an index of sea turtle abundances. We assume that the location within a country has an effect on the abundances as populations that are closer together are more likely to experience the same environmental conditions. Furthermore, the same populations are measured over time, making the measures of one population not independent. To account for the spatial replication adn temporal replication the location of population will be added as a random effect. There is likely to be some variation between years caused by environmental fluctuations, however these are probably quite small. To limit the complexity of the model, year will not be included as a random effect.
 
-The data will be analysed using the bayesian approach. The default priors of the brms package will be used which is a combination of uniform and weak priors based on our data. Our response variable is the population abundance and the explanatory variables are time and country. Lastly, the data is count data, therefore a poisson distribution is used. 
+The data will be analysed using the bayesian approach. The default priors of the `brms` package will be used which is a combination of uniform and weak priors based on our data. Our response variable is the population abundance and the explanatory variables are time and country. Lastly, the data is count data, therefore a poisson distribution is used. 
+
+```r
+model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),   # interaction between country and year
+                    data = long4, family = poisson(), chains = 3,                      # poisson distribution
+                    iter = 4000, warmup = 1000,
+                    control = list(max_treedepth = 15, adapt_delta = 0.9))             # increased maximum treedepth and alpha delta
+summary(model)
+```
 
 **Results**    
 When the 95% credible intervals do not overlap zero, we can consider the results to be significant. Therefore, our results show that there is a significant change in each country over time. However, the change over time is positive in all countries except Australia, where see a decrease in nests over time.

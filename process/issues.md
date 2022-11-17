@@ -1,4 +1,5 @@
-# Making a model that converges:
+# Model process:   
+**This file explains the ways in which the model was changed to converge and why an interaction term between year and country was added in.**   
 
 **Model 1:**  
 Warning messages:  
@@ -52,9 +53,16 @@ https://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded
 
 **Model 4**  
 The model converged and there were no more warning messages.  
-BUT model took absolutely ages to run, I went and had lunch whilst it was doing its thing. Will check with tutors at coding club that this is okay.
+BUT model took absolutely ages to run. Furthermore, when we plot the model predictions on to the raw data we can clearly see when we look at Australia, that the model predictions do not match the actual trends.
+
+![image](https://user-images.githubusercontent.com/114161047/202538537-6e574d5c-947b-4a27-a5bf-0dd709d93071.png)
+
+
 
 **Model 5**   
-After visualising the results of model 4, which assumed the same population trends for each country (same slope), it became clear that the model is not suitable. This becomes clear when looking at Australia which should have a population decline.
-To account for different slopes, a small change was made to model 4. An interaction between country and year was integrated into the model. There are some issues with model convergence, which have mostly been resolved (but still three divergent transitions left).
+Model 4, which assumed the same population trends for each country (same slope), is not suitable as seen when visualising the predictions on the raw data. 
+To account for different slopes, a small change was made to model 4. An interaction between country and year was integrated into the model. There are some issues with model convergence, which have mostly been resolved (but still four divergent transitions left). The model is more efficient and took a lot less time to run than the previous one.  Furthermore, when we plot the model predictions from this model which allows for different slopes, we see that the model predictions match the trends in each country well.
+
+![image](https://user-images.githubusercontent.com/114161047/202539110-80111a3b-6114-4c17-bf10-5071fccd0710.png)
+
 

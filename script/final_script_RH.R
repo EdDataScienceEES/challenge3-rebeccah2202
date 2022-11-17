@@ -9,16 +9,15 @@
 
 # Libraries
 library(tidyverse)
-library(tidyr)
-library(dplyr)
-library(ggplot2)
 library(ggthemes)
 library(gridExtra)
 library(skimr)
 library(brms)
-library(readr)
 library(crunch)
 library(tidybayes)
+library(sjPlot)
+library(insight)
+library(httr)
 
 # Load Living Planet Data
 load("data/LPI_data.Rdata")
@@ -112,9 +111,5 @@ ggsave(filename = 'figures/countries_mod.png', location_seperate,
        device = 'png', width = 10, height = 8)
 
 # Model Output Table ----
-library(sjPlot)
-library(insight)
-library(httr)
-
 tab_model(model)  #  back-transformed
 tab_model(model, transform = NULL)  # log scale

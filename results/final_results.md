@@ -24,7 +24,7 @@ Table 1: This table shows the model output including the estimates and 95% credi
 ![image](https://user-images.githubusercontent.com/114161047/202420061-f3cc589c-f101-412b-ad71-860bd6282c0e.png)
 
 The following figure visualises the population trends for each country using the model predictions. We see an increase in Loggerhead Sea turtle nests in Greece, The United States, South Africa and Brazil (Figure 1). But we see a dramatic decrease in nests in Australia. 
-![image](https://user-images.githubusercontent.com/114161047/202274433-12162dfc-1687-4ae9-a197-55977fd03489.png)
+![image](https://user-images.githubusercontent.com/114161047/202436317-b452665c-d5fe-48e1-8ffa-28f65f1a42aa.png)
 Figure 1: Population trends in Australia, Brazil, Greece, United States and South Africa. All trends are considered significant, as the 95% credible intervals do not overlap zero.
 
 

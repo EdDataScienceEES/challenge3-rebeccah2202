@@ -20,10 +20,10 @@ As we want to see how Loggerhead Sea Turtle population trends change over time i
 The data was analysed using the bayesian approach. The default priors of the `brms` package will be used which is a combination of uniform and weak priors based on our data. Lastly, the data is count data, therefore a poisson distribution is used. The following snippet of code shows the model:     
 
 ```r
-model5 <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),   # interaction between country and year, location of pop. random effect
-                    data = long2, family = poisson(), chains = 3,                       # poisson distribution
-                    iter = 4000, warmup = 1000,
-                    control = list(max_treedepth = 15, adapt_delta = 0.9))             
+model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),   # interaction between country and year, location of pop. random effect
+                   data = long2, family = poisson(), chains = 3,                       # poisson distribution
+                   iter = 4000, warmup = 1000,
+                   control = list(max_treedepth = 15, adapt_delta = 0.9))             
 ```
 
 ### Results    

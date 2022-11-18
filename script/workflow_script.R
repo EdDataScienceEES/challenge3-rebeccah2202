@@ -4,7 +4,7 @@
 # Edited by Rebecca Hies
 # 14th November 2022
 # Nests counts used as an index for population abundance.
-# When population/abundance mentioned, this represents nest counts.
+# When population abundance mentioned, this is actually nest counts.
 
 # Data wrangling ----
 
@@ -111,12 +111,12 @@ summary(model3)
 # Model 4 ----
 # Increasing maximum tree depth to 15 to resolve high number of transitions that exceed max treedepth.
 # I realised my data starts from 1973, so I changed that too.
-model4 <- brms::brm(pop ~ I(year - 1973) + Country.list + (1|Location.of.population),
-                    data = long4, family = poisson(), chains = 3,
-                    iter = 4000, warmup = 1000,
-                    control = list(max_treedepth = 15, adapt_delta = 0.99))
+# model4 <- brms::brm(pop ~ I(year - 1973) + Country.list + (1|Location.of.population),
+#                    data = long4, family = poisson(), chains = 3,
+#                    iter = 4000, warmup = 1000,
+#                    control = list(max_treedepth = 15, adapt_delta = 0.99))
 
-save(model4, file = "script/model4.RData")
+# save(model4, file = "script/model4.RData")
 
 load("~/data science/challenge3-rebeccah2202/script/model4.RData")
 summary(model4)

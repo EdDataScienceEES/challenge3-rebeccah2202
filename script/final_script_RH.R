@@ -7,11 +7,7 @@
 
 # Libraries ----
 library(tidyverse)
-library(ggthemes)
-library(gridExtra)
-library(skimr)
 library(brms)
-library(crunch)
 library(tidybayes)
 # the following three packages are necessary to make the table
 library(sjPlot)   
@@ -87,8 +83,8 @@ long2$pop <- as.integer(long2$pop)  # making nest counts integers
 # save(model, file = "script/model.RData")
 load("~/data science/challenge3-rebeccah2202/script/model.RData")
 summary(model)
-plot(model)
-pp_check(model)
+# plot(model)
+# pp_check(model)
 
 # Data visualisation ----
 # Figure separate locations: This figure incorporates facet_wrap function to plot countries in separate plots including model predictions

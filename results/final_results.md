@@ -36,10 +36,10 @@ When the 95% credible intervals do not overlap zero, we can consider the results
 
 
 The following figure visualises the population trends for each country using the model predictions. 
-We see an increase in Loggerhead Sea turtle nests in The United States, South Africa and Brazil, as the 95% credible intervals do not overlap zero (Figure 1). In Australia there was a dramatic decrease in nests between 1975 and 2000 (Figure 1). In the first years of nests counts there were around 800 nests and in the final year of counts there were less than 50 (Figure 1). The credible intervals for Greece are very large and overlap zero, so there is not a significant change in nests over time, indicating that population abundance has not changed significantly over time (Figure 1). 
+We see an increase in Loggerhead Sea turtle nests in The United States, South Africa and Brazil, as the 95% credible intervals do not overlap zero (Figure 1). In Australia there was a dramatic decrease in nests between 1975 and 2000 (Figure 1). In the first years of nests counts there were around 800 nests and in the final year of counts there were less than 50 (Figure 1). The credible intervals for Greece are very large and the number of nests is stable over time, indicating that population abundance has not changed significantly over time (Figure 1). 
 
-![image](https://user-images.githubusercontent.com/114161047/202436317-b452665c-d5fe-48e1-8ffa-28f65f1a42aa.png)
-**Figure 1: Population trends in Australia, Brazil, Greece, United States and South Africa. The points are the raw data of nest counts. The lines are the predictions from the model, and the coloured area around it are the 95% credible intervals. The trends in Australia, Brazil, United States and South Africa are considered significant, as the 95% credible intervals do not overlap zero. The population trends in Greece are not significant as the 95% credible intervals overlap zero (n=224).**
+![image](https://user-images.githubusercontent.com/114161047/202804205-7c47385f-78f7-451e-a82b-48e7f36e2ca2.png)
+**Figure 1: Population trends in Australia, Brazil, Greece, United States and South Africa. The points are the raw data of nest counts. The lines are the predictions from the model, and the coloured area around it are the 95% credible intervals. The trends in Australia, Brazil, United States and South Africa are considered significant, as the 95% credible intervals do not overlap zero. The number of nests in Greece are stable (n=224).**
 
 
 **Conclusions**      

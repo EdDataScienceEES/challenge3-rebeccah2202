@@ -10,7 +10,7 @@ Contact: s2091339@ed.ac.uk
 [Workflow](/process/workflow.pdf)   
 [Model process](/process/issues.md)    
 [Workflow script](/script/challenge3_starter_script.R)   
-[Feedback](/process/feedback.md)
+[Feedback](/process/feedback.md)    
 [Final script](/script/final_script_RH.R)    
 [Final table](/results/table_mod5.png)   
 [Final figure](/figures/countries_model.png)   

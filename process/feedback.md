@@ -1,5 +1,5 @@
 # PARTCIPATION
-### This file is a summary of the feedback I received, the feedback I implemented and the feedback I gave. All feedback can also be found in the issues of the challenge repositories.
+### This file is a summary of the feedback I received, the feedback I implemented and the feedback I gave. All feedback can also be found in the issues of the challenge repositories. This is also for me to kee track of which feedback I have already impemented and what I still need to change.
 
 **Feedback Pippa gave me**   
 Read.me:   
@@ -20,7 +20,7 @@ Really like how you have a step by step work through of why you changed and what
 
 Final Script:   
 Everything runs up until your models (which is what you wanted so that is fine)   
-Double check you need all those libraries, I wasn’t sure because I wasn't able to run the model so I did not know if they were all necessary for the graph you made but on your laptop it is worth checking.   
+Double check you need all those libraries, I wasn’t sure because I wasn't able to run the model so I did not know if they were all necessary for the graph you made but on your laptop it is worth checking. *There were three unnecessary packages which I have now removed. The script still runs without any issues.*
 On your inline commenting sometimes you start with a capital and sometimes it starts with a lowercase letter. Change these to one or the other for consistency. 
 *All inline commenting now starts with a capital*    
 

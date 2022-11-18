@@ -9,10 +9,11 @@ Contact: s2091339@ed.ac.uk
 [Preregistration](/preregistration/preregistration_sea_turtle.md)    
 [Workflow](/process/workflow.pdf)   
 [Model process](/process/issues.md)    
-[Workflow script](/script/challenge3_starter_script.R)    
+[Workflow script](/script/challenge3_starter_script.R)   
+[Feedback](/process/feedback.md)    
 [Final script](/script/final_script_RH.R)    
 [Final table](/results/table_mod5.png)   
-[Final figure](/figures/countries_mod.png)   
+[Final figure](/figures/countries_model.png)   
 
 
 **Image of a loggerhead sea turtle in North Cyprus:**   

@@ -1,6 +1,8 @@
 ## Loggerhead Sea Turtle *(Caretta Caretta)* Population Trends - comparing population trends in different countries
 
-![TURTLE2](https://user-images.githubusercontent.com/114161047/202574149-47722aab-4c87-4e77-973f-e158e2ae566b.png)
+![image](https://user-images.githubusercontent.com/114161047/202768009-72e2c4a3-a144-49b8-952b-4c909b42de0b.png)   
+Image taken by Michel Gunther for WWF.
+
 
 ### Background    
 Understanding population trends of species is important to assess whether current management strategies are working or a revised conservation strategy is necessary (Ceriani, 2019). This study was conducted to understand Loggerhead Sea Turtle *Caretta Caretta* population trends. Estimating Sea turtle abundances is difficult, as they are marine organisms that disperse widely. Therefore, nests counts are used as an index of population trends, but should be translated into actual population trends (Ceriani, 2019).    

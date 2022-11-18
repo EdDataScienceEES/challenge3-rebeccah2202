@@ -80,13 +80,13 @@ long2$pop <- as.integer(long2$pop)  # making nest counts integers
 # Understanding how populations change over time in each country using nest counts as an index
 # the model takes around 20-30 minutes to run so the model output has been saved below
 
-# model5 <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),   # interaction between country and year, location of pop. random effect
+# model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),   # interaction between country and year, location of pop. random effect
 #                    data = long2, family = poisson(), chains = 3,                       # poisson distribution
 #                    iter = 4000, warmup = 1000,
 #                    control = list(max_treedepth = 15, adapt_delta = 0.9))              # increased maximum tree depth and alpha delta
 
-# save(model, file = "script/model5.RData")
-load("~/data science/challenge3-rebeccah2202/script/model5.RData")
+# save(model, file = "script/model.RData")
+load("~/data science/challenge3-rebeccah2202/script/model.RData")
 summary(model)
 plot(model)
 pp_check(model)
@@ -95,7 +95,7 @@ pp_check(model)
 # Figure separate locations: This figure incorporates facet_wrap function to plot countries in separate plots including model predictions
 (location_seperate <- long2 %>%
     group_by(Country.list) %>%
-    add_predicted_draws(model5) %>%                                                                  # adding the posterior distribution
+    add_predicted_draws(model) %>%                                                                  # adding the posterior distribution
     ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +   # adding colours for different countries
     stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50), alpha = 1/4) +                 # adding regression line and CI
     geom_point(data = long2) +                                                                      # adding raw data
@@ -117,9 +117,9 @@ pp_check(model)
           plot.title = element_text( face = "bold")) +
     labs(title="Loggerhead Sea Turtle trends between 1973 and 2009 across the world\n"))
 
-ggsave(filename = 'figures/countries_mod5.png', location_seperate, 
+ggsave(filename = 'figures/countries_mod.png', location_seperate, 
        device = 'png', width = 10, height = 8)
 
 # Model Output Table ----
-tab_model(model5)                      # back-transformed table
-tab_model(model5, transform = NULL)    # log scale table
+tab_model(model)                      # back-transformed table
+tab_model(model, transform = NULL)    # log scale table

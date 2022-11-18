@@ -6,8 +6,6 @@
 
 # Data wrangling ----
 
-setwd("C:/Users/rebec/Documents/data science/challenge3-rebeccah2202/script")
-
 # Libraries
 library(tidyverse)
 library(ggthemes)
@@ -20,25 +18,24 @@ library(tidybayes)
 # Load Living Planet Data
 load("data/LPI_data.Rdata")
 
-# Choose your species from this list - don't forget to register your species
-# on the issue for the challenge and check that no other student has chosen 
-# the species already. Every student must choose a different species!
+# Looking at different species
 unique(data$Common.Name)
 
-# Filter your species here
+# Filtering my species here
 data1 <- filter(data, Species == "caretta")
 
-# determining number of population
+# Determining number of population
 length(unique(data1$id))
-# determining number of countries
+
+# Determining number of countries
 length(unique(data1$Country.list))
 
-# reshaping data into long form
-long <- gather(data1, "year", "pop", 25:69) %>%                         # Reshape data into long form
-  mutate(year = parse_number(as.character(year))) %>%                   # Extract numeric values from year column
-  mutate(genus_species = paste(Genus, Species, sep=" ")) %>%            # Add column with genus and species
-  mutate(genus_species_id = paste (Genus, Species, id, sep=" ")) %>%    # Add column with genus, species and id
-  select(-Sub.species)                                                  # Remove subspecies column
+# Reshaping data into long form
+long <- gather(data1, "year", "pop", 25:69) %>%                         # Reshaping data into long form
+  mutate(year = parse_number(as.character(year))) %>%                   # Extracting numeric values from year column
+  mutate(genus_species = paste(Genus, Species, sep=" ")) %>%            # Adding column with genus and species
+  mutate(genus_species_id = paste (Genus, Species, id, sep=" ")) %>%    # Adding column with genus, species and id
+  select(-Sub.species)                                                  # Removing subspecies column
 
 long2 <- long %>% na.omit(long)  # Remove NA values
 
@@ -73,10 +70,13 @@ length(unique(long4$year))
 # Hierarchical linear models using brms
 long4$pop <- as.integer(long4$pop)
 # Model 1 ----
-model1 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
-                    data = long4, family = poisson(), chains = 3,
-                    iter = 3000, warmup = 1000)
+# model1 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
+#                    data = long4, family = poisson(), chains = 3,
+#                    iter = 3000, warmup = 1000)
 
+# save(model1, file = "script/model1.RData")
+
+load("~/data science/challenge3-rebeccah2202/script/model1.RData")
 summary(model1)
 plot(model1)
 pp_check(model1)
@@ -84,9 +84,12 @@ pairs(model1)
 
 # Model 2 ----
 # I am increasing iterations to resolve issue of Bulk Effective Samples Size (ESS) being too low
-model2 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
-                    data = long4, family = poisson(), chains = 3,
-                    iter = 4000, warmup = 1000)
+# model2 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
+#                    data = long4, family = poisson(), chains = 3,
+#                    iter = 4000, warmup = 1000)
+
+# save(model2, file = "script/model2.RData")
+load("~/data science/challenge3-rebeccah2202/script/model2.RData")
 
 summary(model2)
 
@@ -95,47 +98,48 @@ summary(model2)
 # (1) high number of divergent transitions
 # (2) high number of transitions that exceed maximum treedepth
 
-model3 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
-                    data = long4, family = poisson(), chains = 3,
-                    iter = 4000, warmup = 1000,
-                    control = list(max_treedepth = 13, adapt_delta = 0.99))
+# model3 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
+#                    data = long4, family = poisson(), chains = 3,
+#                    iter = 4000, warmup = 1000,
+#                    control = list(max_treedepth = 13, adapt_delta = 0.99))
 
+# save(model3, file = "script/model3.RData")
+
+load("~/data science/challenge3-rebeccah2202/script/model3.RData")
 summary(model3)
-plot(model3)
-pp_check(model3)
-pairs(model3)
 
 # Model 4 ----
 # increasing maximum tree depth to 15 to resolve high number of transitions that exceed max treedepth
 # i realised my data starts from 1973, so I changed that too
-model4 <- brms::brm(pop ~ I(year - 1973) + Country.list + (1|Location.of.population),
-                    data = long4, family = poisson(), chains = 3,
-                    iter = 4000, warmup = 1000,
-                    control = list(max_treedepth = 15, adapt_delta = 0.99))
-summary(model4)
-output <- summary(model4)
-plot(model4)
-pp_check(model4)
+# model4 <- brms::brm(pop ~ I(year - 1973) + Country.list + (1|Location.of.population),
+#                    data = long4, family = poisson(), chains = 3,
+#                    iter = 4000, warmup = 1000,
+#                    control = list(max_treedepth = 15, adapt_delta = 0.99))
 
-# actual value of increase by adding mean to intercept estimate
-0.02 + 4.72
-# exponentiate value to undo log-transformation 
-exp(4.74)
-# on average there were 114.43 new sea turtle nests in Australia between 1973 and 1974
+# save(model4, file = "script/model4.RData")
 
-# Model 5 ----
+# load("~/data science/challenge3-rebeccah2202/script/model4.RData")
+# summary(model4)
+# plot(model4)
+# pp_check(model4)
+
+# Final Model ----
 # Data visualisation showed that the general population trend does not fit to individual countries
 # E.g. See f2 - Australia is clearly decreasing
 # Therefore interaction term introduced into model to account for this
 # different slopes for population trends in each country
 
-model5 <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),
-                    data = long4, family = poisson(), chains = 3,
-                    iter = 4000, warmup = 1000,
-                    control = list(max_treedepth = 15, adapt_delta = 0.9))
-summary(model5)
-plot(model5)
-pp_check(model5)
+# model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),
+#                    data = long4, family = poisson(), chains = 3,
+#                    iter = 4000, warmup = 1000,
+#                    control = list(max_treedepth = 15, adapt_delta = 0.9))
+
+# save(model, file = "script/model.RData")
+
+load("~/data science/challenge3-rebeccah2202/script/model.RData")
+summary(model)
+plot(model)
+pp_check(model)
 
 
 # MODEL 4 VISUALISATION ----
@@ -174,7 +178,7 @@ pp_check(model5)
 
 # Figure 2: This figure incorporates facet_wrap function to plot countries in seperate plots
 # we see model predicitions do not match all countries
-# e.g. clearly AUstralia has a population decline
+# e.g. clearly Australia has a population decline
 (f2 <- long4 %>%
     group_by(Country.list) %>%
     add_predicted_draws(model4) %>%
@@ -195,11 +199,11 @@ ggsave(filename = 'figures/countries_mod.png', f2,
        device = 'png', width = 10, height = 8)
 
 
-# MODEL 5 VISUALISATION ----
+# FINAL MODEL VISUALISATION ----
 # Figure 3: Figure that includes all raw data and one line for population trends worldwide bases on model 5 predictions
 # not informative
 (f3 <- long4 %>%
-    add_predicted_draws(model7) %>%  # adding the posterior distribution
+    add_predicted_draws(model) %>%  # adding the posterior distribution
     ggplot(aes(x = year, y = pop)) +
     stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50),  # regression line and CI
                     alpha = 0.5, colour = "black") +
@@ -215,7 +219,7 @@ ggsave(filename = 'figures/countries_mod.png', f2,
 # not all trendlines visible
 (location <- long4 %>%
     group_by(Country.list) %>%
-    add_predicted_draws(model7) %>%
+    add_predicted_draws(model) %>%
     ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +
     stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50), alpha = 1/4) +
     geom_point(data = long4) +
@@ -232,7 +236,7 @@ ggsave(filename = 'figures/countries_mod.png', f2,
 # this figure best presents model results
 (location_seperate <- long4 %>%
     group_by(Country.list) %>%
-    add_predicted_draws(model7) %>%
+    add_predicted_draws(model) %>%
     ggplot(aes(x = year, y = pop, color = ordered(Country.list), fill = ordered(Country.list))) +
     stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50), alpha = 1/4) +
     geom_point(data = long4) +
@@ -254,7 +258,7 @@ ggsave(filename = 'figures/countries_mod.png', f2,
           legend.text = element_text(size = 12),
           panel.spacing = unit(2, "lines")))
 
-ggsave(filename = 'figures/countries_mod5.png', location_seperate, 
+ggsave(filename = 'figures/countries_mod.png', location_seperate, 
        device = 'png', width = 10, height = 8)
 
 # Table ----
@@ -269,7 +273,7 @@ library(httr)
 tab_model(model4)  #  back-transformed
 tab_model(model4, transform = NULL)  # log scale
 
-tab_model(model5)
-tab_model(model5, transform = NULL)
+tab_model(model)
+tab_model(model, transform = NULL)
 
-table <- tab_model(model5)
+table <- tab_model(model)

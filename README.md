@@ -16,8 +16,9 @@ Contact: s2091339@ed.ac.uk
 [Final figure](/figures/countries_model.png)   
 
 
-**Image of a loggerhead sea turtle in North Cyprus:**   
-![image](https://user-images.githubusercontent.com/114161047/202181743-f694b5b0-86ff-485b-8715-4675dcf32edc.png)
+**Image of a juvenile loggerhead sea turtle in the North Atlantic Ocean off Pico Island, Azores:**   
+![image](https://user-images.githubusercontent.com/114161047/202769401-26e46953-161b-4818-bcc6-6035e1a333b6.png)   
+Photo taken by Michael Patrick O'Neill (https://www.seaturtlestatus.org/articles/2019/1/31/atlantic-loggerheads-why-isnt-the-best-understood-sea-turtle-recovering)    
 
 
 **Living Planet Dataset**   

@@ -1,4 +1,6 @@
-**Loggerhead Sea Turtle *(Caretta Caretta)* Population Trends**
+**Loggerhead Sea Turtle *(Caretta Caretta)* Population Trends - comparing population trends in different countries**
+
+![TURTLE2](https://user-images.githubusercontent.com/114161047/202574149-47722aab-4c87-4e77-973f-e158e2ae566b.png)
 
 **Background**    
 Understanding population trends of species is important to assess whether current management strategies are working or a revised conservation strategy is necessary (Ceriani, 2019). This study was conducted to understand Loggerhead Sea Turtle *Caretta Caretta* population trends. Estimating Sea turtle abundances is difficult, as they are marine organisms that disperse widely. Therefore, nests counts are used as an index of population trends, but should be translated into actual population trends (Ceriani, 2019).    
@@ -33,7 +35,7 @@ Table 1: This table shows the model output including the estimates and 95% credi
 
 The following figure visualises the population trends for each country using the model predictions. We see an increase in Loggerhead Sea turtle nests in Greece, The United States, South Africa and Brazil (Figure 1). But we see a dramatic decrease in nests in Australia. 
 ![image](https://user-images.githubusercontent.com/114161047/202436317-b452665c-d5fe-48e1-8ffa-28f65f1a42aa.png)
-Figure 1: Population trends in Australia, Brazil, Greece, United States and South Africa. All trends are considered significant, as the 95% credible intervals do not overlap zero.
+Figure 1: Population trends in Australia, Brazil, Greece, United States and South Africa. The points are the raw data of nest counts. The lines are the predictions from the model, and the cououred area around it are the 95% credible intervals. The trends in Australia, Brazil, United States and South Africa are considered significant, as the 95% credible intervals do not overlap zero. The population trends in Greece are not significant as the 95% credible intervals overlap zero (n=224).
 
 
 **Conclusions**      

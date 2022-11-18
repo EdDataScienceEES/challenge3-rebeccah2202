@@ -3,6 +3,8 @@
 # Starter script written by Isla Myers-Smith
 # Edited by Rebecca Hies
 # 14th November 2022
+# Nests counts used as an index for population abundance.
+# When population/abundance mentioned, this represents nest counts.
 
 # Data wrangling ----
 
@@ -37,20 +39,20 @@ long <- gather(data1, "year", "pop", 25:69) %>%                         # Reshap
   mutate(genus_species_id = paste (Genus, Species, id, sep=" ")) %>%    # Adding column with genus, species and id
   select(-Sub.species)                                                  # Removing subspecies column
 
-long2 <- long %>% na.omit(long)  # Remove NA values
+long2 <- long %>% na.omit(long)  # Removing NA values
 
 long3 <- long2 %>% group_by(genus_species_id) %>%
-  mutate(maxyear=max(year)) %>%                         # column for most recent year of data collection
-  mutate(minyear=min(year)) %>%                         # column for first year of data collection
+  mutate(maxyear=max(year)) %>%                         # Column for most recent year of data collection
+  mutate(minyear=min(year)) %>%                         # Column for first year of data collection
   # creating a column for length of time data available and a column for scale pop trend data
   mutate(scalepop=(pop-min(pop))/(max(pop)-min(pop)), lengthyear = max(year) - min(year)) %>%  
   filter(is.finite(scalepop))
 
 long4 <- long3 %>% 
   group_by(id) %>%   
-  mutate(no_observations = length(id)) %>%              # column with number of years with data for each population
-  filter(no_observations>15) %>%                        # only keep populations with more than 15 years of data
-  filter(!Units == "Total number of female turtles")    # only keep populations with nest counts
+  mutate(no_observations = length(id)) %>%              # Column with number of years with data for each population
+  filter(no_observations>15) %>%                        # Only keep populations with more than 15 years of data
+  filter(!Units == "Total number of female turtles")    # Only keep populations with nest counts
 
 length(unique(long4$year))
 
@@ -62,15 +64,13 @@ length(unique(long4$year))
    xlab("\nLoggerhead Sea Turtle nests") +
    theme(axis.text = element_text(size = 12),
          axis.title = element_text(size = 14, face = "plain")))    
-# the histogram clearly confirms poisson distribution
-# we have integer values and lef-skewed data
-
+# The histogram clearly confirms poisson distribution.
 
 # Statistical analysis ----
-# Hierarchical linear models using brms
+# Hierarchical linear models using brms.
 long4$pop <- as.integer(long4$pop)
 # Model 1 ----
-# model1 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
+# model1 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),  # Population is response variable, country and time are explanatory variables
 #                    data = long4, family = poisson(), chains = 3,
 #                    iter = 3000, warmup = 1000)
 
@@ -78,30 +78,30 @@ long4$pop <- as.integer(long4$pop)
 
 load("~/data science/challenge3-rebeccah2202/script/model1.RData")
 summary(model1)
-plot(model1)
-pp_check(model1)
-pairs(model1)
+# plot(model1)
+# pp_check(model1)
+# pairs(model1)
 
 # Model 2 ----
-# I am increasing iterations to resolve issue of Bulk Effective Samples Size (ESS) being too low
+# I am increasing iterations to resolve issue of Bulk Effective Samples Size (ESS) being too low.
 # model2 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
 #                    data = long4, family = poisson(), chains = 3,
 #                    iter = 4000, warmup = 1000)
 
 # save(model2, file = "script/model2.RData")
-load("~/data science/challenge3-rebeccah2202/script/model2.RData")
 
+load("~/data science/challenge3-rebeccah2202/script/model2.RData")
 summary(model2)
 
 # Model 3 ----
 # I have increased the maximum tree depth to 13 and adapt delta to 0.99 to try and resolve
-# (1) high number of divergent transitions
-# (2) high number of transitions that exceed maximum treedepth
+# (1) high number of divergent transitions.
+# (2) high number of transitions that exceed maximum treedepth.
 
 # model3 <- brms::brm(pop ~ I(year - 1970) + Country.list + (1|Location.of.population),
-#                    data = long4, family = poisson(), chains = 3,
-#                    iter = 4000, warmup = 1000,
-#                    control = list(max_treedepth = 13, adapt_delta = 0.99))
+#                     data = long4, family = poisson(), chains = 3,
+#                     iter = 4000, warmup = 1000,
+#                     control = list(max_treedepth = 13, adapt_delta = 0.99))
 
 # save(model3, file = "script/model3.RData")
 
@@ -109,27 +109,27 @@ load("~/data science/challenge3-rebeccah2202/script/model3.RData")
 summary(model3)
 
 # Model 4 ----
-# increasing maximum tree depth to 15 to resolve high number of transitions that exceed max treedepth
-# i realised my data starts from 1973, so I changed that too
-# model4 <- brms::brm(pop ~ I(year - 1973) + Country.list + (1|Location.of.population),
-#                    data = long4, family = poisson(), chains = 3,
-#                    iter = 4000, warmup = 1000,
-#                    control = list(max_treedepth = 15, adapt_delta = 0.99))
+# Increasing maximum tree depth to 15 to resolve high number of transitions that exceed max treedepth.
+# I realised my data starts from 1973, so I changed that too.
+model4 <- brms::brm(pop ~ I(year - 1973) + Country.list + (1|Location.of.population),
+                    data = long4, family = poisson(), chains = 3,
+                    iter = 4000, warmup = 1000,
+                    control = list(max_treedepth = 15, adapt_delta = 0.99))
 
-# save(model4, file = "script/model4.RData")
+save(model4, file = "script/model4.RData")
 
-# load("~/data science/challenge3-rebeccah2202/script/model4.RData")
-# summary(model4)
+load("~/data science/challenge3-rebeccah2202/script/model4.RData")
+summary(model4)
 # plot(model4)
 # pp_check(model4)
 
 # Final Model ----
-# Data visualisation showed that the general population trend does not fit to individual countries
-# E.g. See f2 - Australia is clearly decreasing
-# Therefore interaction term introduced into model to account for this
-# different slopes for population trends in each country
+# Data visualisation showed that the general population trend does not fit to all individual countries.
+# E.g. See f2 - Australia is clearly decreasing!!
+# Therefore interaction term introduced into model to account for this.
+# Different slopes for population trends in each country.
 
-# model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),
+# model <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.population),  # Interaction introduced using *
 #                    data = long4, family = poisson(), chains = 3,
 #                    iter = 4000, warmup = 1000,
 #                    control = list(max_treedepth = 15, adapt_delta = 0.9))
@@ -143,10 +143,10 @@ pp_check(model)
 
 
 # MODEL 4 VISUALISATION ----
-# based on plot used in bayesian tutorial
+# Based on plot used in bayesian tutorial.
 
 # Figure 1: Figure that includes all raw data and one line for population trends worldwide bases on model predictions
-# not informative
+# Not informative
 (f1 <- long4 %>%
     add_predicted_draws(model4) %>%  # adding the posterior distribution 
     ggplot(aes(x = year, y = pop)) +
@@ -161,7 +161,7 @@ pp_check(model)
           legend.position = c(0.15, 0.85)))
 
 # Figure location: Makes a seperate trendline based on model predictions for each country in one plot
-# not all trendlines visible
+# Not all trendlines visible
 (location_fit <- long4 %>%
     group_by(Country.list) %>%  # grouping by country
     add_predicted_draws(model4) %>%
@@ -177,8 +177,8 @@ pp_check(model)
     theme(legend.title = element_blank()))
 
 # Figure 2: This figure incorporates facet_wrap function to plot countries in seperate plots
-# we see model predicitions do not match all countries
-# e.g. clearly Australia has a population decline
+# We see model predicitions do not match all countries
+# E.g. clearly Australia has a population decline
 (f2 <- long4 %>%
     group_by(Country.list) %>%
     add_predicted_draws(model4) %>%
@@ -200,8 +200,8 @@ ggsave(filename = 'figures/countries_mod.png', f2,
 
 
 # FINAL MODEL VISUALISATION ----
-# Figure 3: Figure that includes all raw data and one line for population trends worldwide bases on model 5 predictions
-# not informative
+# Figure 3: Figure that includes all raw data and one line for population trends worldwide based on model predictions
+# Not informative
 (f3 <- long4 %>%
     add_predicted_draws(model) %>%  # adding the posterior distribution
     ggplot(aes(x = year, y = pop)) +
@@ -216,7 +216,7 @@ ggsave(filename = 'figures/countries_mod.png', f2,
           legend.position = c(0.15, 0.85)))
 
 # Figure location: Makes a separate trendline based on model predictions for each country in one plot
-# not all trendlines visible
+# Not all trendlines visible
 (location <- long4 %>%
     group_by(Country.list) %>%
     add_predicted_draws(model) %>%
@@ -232,8 +232,8 @@ ggsave(filename = 'figures/countries_mod.png', f2,
     theme(legend.title = element_blank()))
 
 # Figure separate locations: This figure incorporates facet_wrap function to plot countries in separate plots
-# we see model predictions match countries
-# this figure best presents model results
+# We see model predictions match countries
+# This figure best presents model results
 (location_seperate <- long4 %>%
     group_by(Country.list) %>%
     add_predicted_draws(model) %>%
@@ -256,22 +256,23 @@ ggsave(filename = 'figures/countries_mod.png', f2,
           panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           plot.margin = unit(c(1,1,1,1), units = , "cm"),                 
           legend.text = element_text(size = 12),
-          panel.spacing = unit(2, "lines")))
+          panel.spacing = unit(2, "lines")) +
+    labs(title="Loggerhead Sea Turtle trends between 1973 and 2009 across the world\n"))
 
 ggsave(filename = 'figures/countries_mod.png', location_seperate, 
        device = 'png', width = 10, height = 8)
 
 # Table ----
 stargazer(output, type = "html", summary = FALSE)
-# stargazer does not support object type
+# Stargazer does not support object type
 
-# updates table when model output changes and code is rerun
+# Updates table when model output changes and code is rerun
 library(sjPlot)
 library(insight)
 library(httr)
 
-tab_model(model4)  #  back-transformed
-tab_model(model4, transform = NULL)  # log scale
+tab_model(model4)  #  Back-transformed
+tab_model(model4, transform = NULL)  # Log scale
 
 tab_model(model)
 tab_model(model, transform = NULL)

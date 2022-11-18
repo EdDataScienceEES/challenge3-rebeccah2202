@@ -85,7 +85,7 @@ long2$pop <- as.integer(long2$pop)  # making nest counts integers
 #                    iter = 4000, warmup = 1000,
 #                    control = list(max_treedepth = 15, adapt_delta = 0.9))              # increased maximum tree depth and alpha delta
 
-# save(model, file = "model5.RData")
+# save(model, file = "script/model5.RData")
 load("~/data science/challenge3-rebeccah2202/script/model5.RData")
 summary(model)
 plot(model)

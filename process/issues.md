@@ -59,7 +59,7 @@ BUT model took absolutely ages to run. Furthermore, when we plot the model predi
 
 
 
-**Model 5**   
+**Final model**   
 Model 4, which assumed the same population trends for each country (same slope), is not suitable as seen when visualising the predictions on the raw data. 
 To account for different slopes, a small change was made to model 4. An interaction between country and year was integrated into the model. There are some issues with model convergence, which have mostly been resolved (but still four divergent transitions left). The model is more efficient and took a lot less time to run than the previous one.  Furthermore, when we plot the model predictions from this model which allows for different slopes, we see that the model predictions match the trends in each country well.
 

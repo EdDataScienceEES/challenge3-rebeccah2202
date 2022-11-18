@@ -28,8 +28,7 @@ model5 <- brms::brm(pop ~ I(year - 1973) * Country.list + (1|Location.of.populat
 When the 95% credible intervals do not overlap zero, we can consider the results to be significant. Therefore, our model output shows that there is a significant change in population abundance over time in Australia (Table 1). Furthermore, the credible intervals show that there is a significant difference in population over time between Australia with all other countries. 
 
 **Table 1: This table shows the model output including the estimates and 95% credible intervals. The 95% credible intervals that do not overlap zero are considered significant which is indicated with a star. Note that the values are log-transformed as a poisson distribution was used.**     
-![image](https://user-images.githubusercontent.com/114161047/202723939-bc451ef7-5a39-40f1-84d1-12a8a60875e3.png)
-<img src="/results/table_mod5.png" alt="drawing" width="200"/>
+<img src="table_mod5.png" alt="drawing" width="450"/>
 
 
 The following figure visualises the population trends for each country using the model predictions. 

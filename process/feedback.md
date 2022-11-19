@@ -24,3 +24,28 @@ Double check you need all those libraries, I wasn’t sure because I wasn't able
 On your inline commenting sometimes you start with a capital and sometimes it starts with a lowercase letter. Change these to one or the other for consistency. 
 *All inline commenting now starts with a capital*    
 
+**Feedback I gave to Pippa**
+Here are few suggestions I have just from going through your repo:
+
+Folder Challenge 3 info: maybe give it a more simple name (one word)
+
+Feel free to ignore this comment: I don't find it visually appealing to have green points on pink (Tanzania).
+
+in image folder only image in README file not from the final report. I would add that to image folder.
+
+maybe add a README to preregistration folder to explain why you made several preregistrations
+
+I am a bit confused about the figure and images folders. You have the same figure in two folders. Once in the figures folder and then also in the image subfolder in the report folder. Maybe have one folder with all images and one folder with all figures.
+
+I really like that you created your own theme! Very creative!!
+
+I also like the section effects in your script. Very helpful for understanding dataset.
+
+I am not sure what to put in the gitignore file. I just added what was suggested in the github tutorial
+
+Report:
+Overall I really like your report! I just have a few suggestions:
+- always put latin names in italics
+- maybe write a short sentence on why you predict that populations will be declining and why this is likely to vary between countries
+- I really like your justification for why a longer duration of observations are necessary for monitoring elephants
+- it's not confidence intervals, it's credible intervals in bayesian stats

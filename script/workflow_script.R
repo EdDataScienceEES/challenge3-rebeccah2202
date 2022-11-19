@@ -263,7 +263,7 @@ ggsave(filename = 'figures/countries_mod.png', location_seperate,
        device = 'png', width = 10, height = 8)
 
 # Table ----
-stargazer(output, type = "html", summary = FALSE)
+# stargazer(output, type = "html", summary = FALSE)
 # Stargazer does not support object type
 
 # Updates table when model output changes and code is rerun

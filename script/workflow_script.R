@@ -12,9 +12,7 @@
 library(tidyverse)
 library(ggthemes)
 library(gridExtra)
-library(skimr)
 library(brms)
-library(crunch)
 library(tidybayes)
 
 # Load Living Planet Data

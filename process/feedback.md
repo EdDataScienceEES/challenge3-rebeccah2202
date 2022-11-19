@@ -24,7 +24,7 @@ Double check you need all those libraries, I wasn’t sure because I wasn't able
 On your inline commenting sometimes you start with a capital and sometimes it starts with a lowercase letter. Change these to one or the other for consistency. 
 *All inline commenting now starts with a capital*    
 
-**Feedback I gave to Pippa**
+**Feedback I gave to Pippa**   
 Here are few suggestions I have just from going through your repo:
 
 Folder Challenge 3 info: maybe give it a more simple name (one word)
@@ -49,3 +49,29 @@ Overall I really like your report! I just have a few suggestions:
 - maybe write a short sentence on why you predict that populations will be declining and why this is likely to vary between countries
 - I really like your justification for why a longer duration of observations are necessary for monitoring elephants
 - it's not confidence intervals, it's credible intervals in bayesian stats
+
+
+**Feedback I gave to luisa**   
+is inca package necessary (I've not come across it)?   
+why is there a star after 1970?   
+
+The variables section is unclear to me:   
+what do you mean by levels?   
+the dependent variable is not population change, the dependent change is the annual.index1000   
+I see now that this is more clear in the components section   
+
+I think it is really interesting that you assigned the location into regions, good idea!   
+
+why does gaussian model have pipe at the end?   
+
+### Participation in issues
+I opened two issues with questions that I had about the challenge:    
+challenge 3 differences between locations #112
+and reproducible code #139   
+
+I also tried to help others in the issues:   
+cannot change the image size in readme #125   
+My response: @VeeCong hi, the second code works for me. Are you sure you have specified the right file path for the image? If you want the code to work it has to be in the same folder or you would have to specify where in the repo your image is saved. Hope that helps.
+
+
+

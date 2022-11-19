@@ -18,7 +18,7 @@ Contact: s2091339@ed.ac.uk
 
 **Image of a juvenile loggerhead sea turtle in the North Atlantic Ocean off Pico Island, Azores:**   
 ![image](https://user-images.githubusercontent.com/114161047/202769401-26e46953-161b-4818-bcc6-6035e1a333b6.png)   
-Photo taken by Michael Patrick O'Neill (https://www.seaturtlestatus.org/articles/2019/1/31/atlantic-loggerheads-why-isnt-the-best-understood-sea-turtle-recovering)    
+Photo taken by Michael Patrick O'Neill [*photo credit*](https://www.seaturtlestatus.org/articles/2019/1/31/atlantic-loggerheads-why-isnt-the-best-understood-sea-turtle-recovering)    
 
 
 **Living Planet Dataset**   

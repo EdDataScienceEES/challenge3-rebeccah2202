@@ -87,6 +87,21 @@ summary(model)
 # pp_check(model)
 
 # Data visualisation ----
+
+# Create turtle theme
+theme_turtle <- function(){
+  theme_bw()+
+    theme(legend.title = element_blank(), 
+          legend.position = "none",
+          axis.text.x = element_text(size = 12, angle = 45,  vjust = 1, hjust = 1),
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 13, face = "plain"),
+          plot.margin = unit(c(1,1,1,1), units = , "cm"), 
+          panel.grid = element_blank(), 
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          legend.text = element_text(size = 12))
+}
+
 # Figure separate locations: This figure incorporates facet_wrap function to plot countries in separate plots including model predictions
 (location_seperate <- long2 %>%
     group_by(Country.list) %>%
@@ -95,21 +110,13 @@ summary(model)
     stat_lineribbon(aes(y = .prediction), .width = c(.95, .80, .50), alpha = 1/4) +                 # Adding regression line and CI
     geom_point(data = long2) +                                                                      # Adding raw data
     facet_wrap(~ Country.list, scales = "free_y") +                                                 # Separating countries into separate graphs
-    theme_bw() +
     ylab("Number of Loggerhead Sea Turtle nests\n") +
     xlab("\nYear") +
     scale_fill_brewer(palette = "Set2") +                                                           # Changing colour palette
     scale_color_brewer(palette = "Dark2") +
-    theme(legend.title = element_blank(),                                                           # Formatting figure
-          legend.position = "none",
-          axis.text.x = element_text(size = 12, angle = 45,  vjust = 1, hjust = 1),
-          axis.text.y = element_text(size = 12),
-          axis.title = element_text(size = 13),                        
-          panel.grid = element_blank(), 
-          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-          plot.margin = unit(c(1,1,1,1), units = , "cm"),                 
-          panel.spacing = unit(2, "lines"),
-          plot.title = element_text( face = "bold")))
+    theme_turtle() +                                                                                # adding turtle theme
+    theme(panel.spacing = unit(1.5, "lines")))
+
 
 ggsave(filename = 'figures/countries_model.png', location_seperate, 
        device = 'png', width = 10, height = 8)

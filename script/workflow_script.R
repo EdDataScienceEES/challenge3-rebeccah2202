@@ -143,6 +143,21 @@ pp_check(model)
 # MODEL 4 VISUALISATION ----
 # Based on plot used in bayesian tutorial.
 
+# Create a theme to make code less long:
+theme_turtle <- function(){
+  theme_bw()+
+    theme(legend.title = element_blank(), 
+          legend.position = "none",
+          axis.text.x = element_text(size = 12, angle = 45,  vjust = 1, hjust = 1),
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 13, face = "plain"),
+          plot.margin = unit(c(1,1,1,1), units = , "cm"), 
+          panel.grid = element_blank(), 
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          legend.text = element_text(size = 12))
+}
+
+
 # Figure 1: Figure that includes all raw data and one line for population trends worldwide bases on model predictions
 # Not informative
 (f1 <- long4 %>%
@@ -154,9 +169,8 @@ pp_check(model)
     scale_fill_brewer(palette = "Greys") +
     ylab("Loggerhead Sea Turtle abundance\n") +  
     xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank(),
-          legend.position = c(0.15, 0.85)))
+    theme_turtle() +
+    theme(legend.position = c(0.15, 0.85)))
 
 # Figure location: Makes a seperate trendline based on model predictions for each country in one plot
 # Not all trendlines visible
@@ -168,11 +182,9 @@ pp_check(model)
     geom_point(data = long4) +
     scale_fill_brewer(palette = "Set2") +
     scale_color_brewer(palette = "Dark2") +
-    theme_bw() +
     ylab("Loggerhead Sea Turtle nests\n") +
     xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank()))
+    theme_turtle())
 
 # Figure 2: This figure incorporates facet_wrap function to plot countries in seperate plots
 # We see model predicitions do not match all countries
@@ -187,11 +199,9 @@ pp_check(model)
     facet_wrap(~ Country.list, scales = "free_y") +  # this creates seperate plots for each country
     scale_fill_brewer(palette = "Set2") +
     scale_color_brewer(palette = "Dark2") +
-    theme_bw() +
     ylab("Loggerhead Sea Turtle nests\n") +
     xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank(), legend.position = "none"))
+    theme_turtle())
 
 ggsave(filename = 'figures/countries_mod.png', f2, 
        device = 'png', width = 10, height = 8)
@@ -209,9 +219,8 @@ ggsave(filename = 'figures/countries_mod.png', f2,
     scale_fill_brewer(palette = "Greys") +
     ylab("Loggerhead Sea Turtle nests\n") +  
     xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank(),
-          legend.position = c(0.15, 0.85)))
+    theme_turtle() +
+    theme(legend.position = c(0.15, 0.85)))
 
 # Figure location: Makes a separate trendline based on model predictions for each country in one plot
 # Not all trendlines visible
@@ -223,11 +232,9 @@ ggsave(filename = 'figures/countries_mod.png', f2,
     geom_point(data = long4) +
     scale_fill_brewer(palette = "Set2") +
     scale_color_brewer(palette = "Dark2") +
-    theme_bw() +
     ylab("Loggerhead Sea Turtle nests\n") +
     xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank()))
+    theme_turtle())
 
 # Figure separate locations: This figure incorporates facet_wrap function to plot countries in separate plots
 # We see model predictions match countries
@@ -241,21 +248,11 @@ ggsave(filename = 'figures/countries_mod.png', f2,
     facet_wrap(~ Country.list, scales = "free_y") +
     scale_fill_brewer(palette = "Set2") +
     scale_color_brewer(palette = "Dark2") +
-    theme_bw() +
     ylab("Number of Loggerhead Sea Turtle nests\n") +
     xlab("\nYear") +
-    theme_bw() +
-    theme(legend.title = element_blank(), 
-          legend.position = "none",
-          axis.text.x = element_text(size = 12, angle = 45,  vjust = 1, hjust = 1),
-          axis.text.y = element_text(size = 12),
-          axis.title = element_text(size = 13, face = "plain"),                        
-          panel.grid = element_blank(), 
-          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-          plot.margin = unit(c(1,1,1,1), units = , "cm"),                 
-          legend.text = element_text(size = 12),
-          panel.spacing = unit(2, "lines")) +
-    labs(title="Loggerhead Sea Turtle trends between 1973 and 2009 across the world\n"))
+    labs(title="Loggerhead Sea Turtle trends between 1973 and 2009 across the world\n") +
+    theme_turtle() +
+    theme(panel.spacing = unit(1.5, "lines")))
 
 ggsave(filename = 'figures/countries_mod.png', location_seperate, 
        device = 'png', width = 10, height = 8)

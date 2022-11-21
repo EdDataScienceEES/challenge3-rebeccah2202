@@ -64,6 +64,23 @@ I think it is really interesting that you assigned the location into regions, go
 
 why does gaussian model have pipe at the end?   
 
+**Feedback Kinga gave me**
+Some things I ran into:   
+main thing: loading your models with   
+`load("~/data science/challenge3-rebeccah2202/script/model.RData")`   
+does not work on someone else's computer if they clone your repo as that is a filepath on your computer - instead use
+`load("script/model4.Rdata")`   *I have changed that now*   
+as the working directory is your repo, so the filepath needs to be relative to that if that makes sense
+when I loaded the models with this code I got the warning message
+Warning: namespace ‘crunch’ is not available and has been replaced
+by .GlobalEnv when processing object ‘model4’
+but it didn't cause any issues when loading the summary etc, so not sure what it means/whether thats relevant.
+Overall great that I can just look at the output and don't need to run the models!!   
+
+In the data exploration script, you set your working directory to your local computer, so I can't run the script at all. I'm not sure that's a problem as you only used that script for yourself but if you leave it like that maybe mention in the first few lines that the script was only used to find out stuff about your turtle and is not relevant for anyone looking at your repo to run / alternatively load data from repo instead of computer. You also load some libraries you don't use in the exploration.   *I removed setwd*   
+
+Report: very nice and clear, with lots of background info and great structure! only thing I noticed is that sometimes you capitalise the name of your turtle and sometimes not ( so sometimes it's Loggerhead Sea Turtle and sometimes loggerhead sea turtle), be consistent with that. In model design once you spell Australia as australia so capitalize that. Also typo in the last line (cliamte instead of climate). Content-wise nothing to say, i really liked it!!   *changed the typo*
+
 ### Participation in issues
 I opened two issues with questions that I had about the challenge:    
 challenge 3 differences between locations #112
@@ -72,6 +89,8 @@ and reproducible code #139
 I also tried to help others in the issues:   
 cannot change the image size in readme #125   
 My response: @VeeCong hi, the second code works for me. Are you sure you have specified the right file path for the image? If you want the code to work it has to be in the same folder or you would have to specify where in the repo your image is saved. Hope that helps.
+
+
 
 
 

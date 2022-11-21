@@ -3,25 +3,24 @@
 # Goal: come up with a sensible research question BEFORE moving on to any statistical analysis
 # 11.11.2022
 # Rebecca Hies
-
-setwd("C:/Users/rebec/Documents/data science/challenge3-rebeccah2202/script")
+# This script was used for data exploration
+# All relevant code has been copied into the workflow and final script
 
 library(tidyr)
 library(dplyr)
 library(ggplot2)
 library(ggthemes)
 library(gridExtra)
-library(skimr)
-library(brms)
-library(readr)
-library(crunch)
+
+# Load Living Planet Data ----
+load("data/LPI_data.Rdata")
 
 # filtering out Loggerhead Sea turtle populations
 data1 <- filter(data, Species == "caretta")
 
 # determining number of population
 length(unique(data1$id))
-# determingin number of countries
+# determining number of countries
 length(unique(data1$Country.list))
 
 # reshaping data into long form

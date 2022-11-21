@@ -74,7 +74,7 @@ long4$pop <- as.integer(long4$pop)
 
 # save(model1, file = "script/model1.RData")
 
-load("~/data science/challenge3-rebeccah2202/script/model1.RData")
+load("script/model1.RData")
 summary(model1)
 # plot(model1)
 # pp_check(model1)
@@ -88,7 +88,7 @@ summary(model1)
 
 # save(model2, file = "script/model2.RData")
 
-load("~/data science/challenge3-rebeccah2202/script/model2.RData")
+load("script/model2.RData")
 summary(model2)
 
 # Model 3 ----
@@ -103,7 +103,7 @@ summary(model2)
 
 # save(model3, file = "script/model3.RData")
 
-load("~/data science/challenge3-rebeccah2202/script/model3.RData")
+load("script/model3.RData")
 summary(model3)
 
 # Model 4 ----
@@ -116,7 +116,7 @@ summary(model3)
 
 # save(model4, file = "script/model4.RData")
 
-load("~/data science/challenge3-rebeccah2202/script/model4.RData")
+load("script/model4.RData")
 summary(model4)
 # plot(model4)
 # pp_check(model4)
@@ -134,7 +134,7 @@ summary(model4)
 
 # save(model, file = "script/model.RData")
 
-load("~/data science/challenge3-rebeccah2202/script/model.RData")
+load("script/model.RData")
 summary(model)
 plot(model)
 pp_check(model)

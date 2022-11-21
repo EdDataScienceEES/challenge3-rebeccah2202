@@ -51,7 +51,7 @@ Overall I really like your report! I just have a few suggestions:
 - it's not confidence intervals, it's credible intervals in bayesian stats
 
 
-**Feedback I gave to luisa**   
+**Feedback I gave to Luisa**   
 is inca package necessary (I've not come across it)?   
 why is there a star after 1970?   
 
@@ -64,7 +64,7 @@ I think it is really interesting that you assigned the location into regions, go
 
 why does gaussian model have pipe at the end?   
 
-**Feedback Kinga gave me**
+**Feedback Kinga gave me**   
 Some things I ran into:   
 main thing: loading your models with   
 `load("~/data science/challenge3-rebeccah2202/script/model.RData")`   
@@ -81,6 +81,23 @@ In the data exploration script, you set your working directory to your local com
 
 Report: very nice and clear, with lots of background info and great structure! only thing I noticed is that sometimes you capitalise the name of your turtle and sometimes not ( so sometimes it's Loggerhead Sea Turtle and sometimes loggerhead sea turtle), be consistent with that. In model design once you spell Australia as australia so capitalize that. Also typo in the last line (cliamte instead of climate). Content-wise nothing to say, i really liked it!!   *changed the typo*
 
+**Feedback I gave to Kinga**   
+@kingakaszap I just had a look through your repo and I think it is really good. I was able to find everything easily and your decisions were really well justified!
+
+Just a few small suggestions:
+
+I really like your README file. It is very clear where everything is. However, the relative link to the final report does not work.
+Your file path is `[report file](/final/final%20report)`. I think the reason it isn't woking is that you haven't specified that it is a markdown file. Try using `[report file](/final/final%20report.md)` and see if that works.
+
+Report:
+
+in the Hypothesis section you wrote "great abundance", I think you mean Great Cormorant abundance
+I really like that you added a boxplot to show how much abundances vary - makes justification for using scaled data much stronger
+*.* I don't think that is meant to be in report at the end of the sentence on the model framework.
+Results: I think that in bayesian statistics the credibility intervals are actually called credible intervals. However, I just checked in the brms tutorial, and there they are referred to as credibility intervals, so now I am uncertain.
+I think your decisions file is really good.
+I cloned your repo and ran your script. There were no issues!
+
 ### Participation in issues
 I opened two issues with questions that I had about the challenge:    
 challenge 3 differences between locations #112
@@ -89,8 +106,4 @@ and reproducible code #139
 I also tried to help others in the issues:   
 cannot change the image size in readme #125   
 My response: @VeeCong hi, the second code works for me. Are you sure you have specified the right file path for the image? If you want the code to work it has to be in the same folder or you would have to specify where in the repo your image is saved. Hope that helps.
-
-
-
-
 
